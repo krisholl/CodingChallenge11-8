@@ -13,13 +13,8 @@ namespace Checker.Verification
         {
 
         }
-        private static int[] levels = {5,5,10,10,15,15,20,20 };
         public bool IsVerified(int[] Individual, int Total)
         {
-            if(Total > 120)
-            {
-                return false;
-            }
             int[] Very = new int[2];
             int[] Easy = new int[2];
             int[] Med = new int[2];
@@ -28,23 +23,8 @@ namespace Checker.Verification
             Array.ConstrainedCopy(Individual, 2, Easy, 0, 2);
             Array.ConstrainedCopy(Individual, 4, Med, 0, 2);
             Array.ConstrainedCopy(Individual, 6, Hard, 0, 2);
-            return Array.TrueForAll(Very, VeryEasy) && Array.TrueForAll(Easy,EasyMod) && Array.TrueForAll(Med, Medium) && Array.TrueForAll(Hard,HardMod);
+            return Array.TrueForAll(Very, p =>p<=5) && Array.TrueForAll(Easy,p => p<=10) && Array.TrueForAll(Med, p=> p<=15) && Array.TrueForAll(Hard,p=> p<=20) && Total<=120;
         }
-        private bool VeryEasy(int time)
-        {
-            return time <= 5;
-        }
-        private bool EasyMod(int time)
-        {
-            return time <= 10;
-        }
-        private bool Medium(int time)
-        {
-            return time <= 15;
-        }
-        private bool HardMod(int time)
-        {
-            return time <= 20;
-        }
+         
     }
 }
